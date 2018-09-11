@@ -9,20 +9,17 @@ async function main({_: [cmd], p, d}) {
   switch (cmd) {
     case 'start': {
       if (d) require('daemonize-process')()
-      const cmd = path.join(
-        __dirname,
-        'node_modules',
-        '.bin',
-        process.platform === 'win32' ? 'micro.cmd' : 'micro'
-      )
+      const cmd = require.resolve('micro/bin/micro.js')
       const args = [
+        cmd,
         `--listen=tcp://0.0.0.0:${p || 9999}`
       ]
       let server = spawn(
-        cmd, args,
+        'node', args,
         {
           stdio: 'inherit',
-          windowsHide: true
+          windowsHide: true,
+          cwd: __dirname
         }
       )
       fs.writeFileSync(
