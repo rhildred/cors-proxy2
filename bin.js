@@ -10,7 +10,7 @@ async function main({_: [cmd], p, d}) {
     case 'start': {
       if (d) require('daemonize-process')()
       const cmd = path.join(
-        process.cwd(),
+        __dirname,
         'node_modules',
         '.bin',
         process.platform === 'win32' ? 'micro.cmd' : 'micro'
