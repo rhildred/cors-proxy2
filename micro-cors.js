@@ -1,5 +1,6 @@
 // MIT License
 // https://github.com/possibilities/micro-cors
+// source: https://github.com/possibilities/micro-cors/pull/42
 const DEFAULT_ALLOW_METHODS = [
   'POST',
   'GET',
@@ -26,11 +27,14 @@ const cors = (options = {}) => handler => (req, res, ...restArgs) => {
     maxAge = DEFAULT_MAX_AGE_SECONDS,
     allowMethods = DEFAULT_ALLOW_METHODS,
     allowHeaders = DEFAULT_ALLOW_HEADERS,
+    allowCredentials = true,
     exposeHeaders = []
   } = options
 
   res.setHeader('Access-Control-Allow-Origin', origin)
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  if (allowCredentials) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+  }
   if (exposeHeaders.length) {
     res.setHeader('Access-Control-Expose-Headers', exposeHeaders.join(','))
   }

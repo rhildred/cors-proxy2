@@ -48,6 +48,7 @@ const cors = require('./micro-cors.js')({
   allowHeaders,
   exposeHeaders,
   allowMethods,
+  allowCredentials: false,
   origin
 })
 const allow = require('./allow-request.js')
@@ -86,6 +87,8 @@ async function service (req, res) {
     // Don't waste my precious bandwidth
     return send(res, 403, '')
   }
+
+  // Handle CORS preflight request
   if (req.method === 'OPTIONS') {
     return send(res, 200, '')
   }
