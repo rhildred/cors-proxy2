@@ -44,6 +44,7 @@ cors-proxy stop
 Environment variables:
 - `PORT` the port to listen to (if run with `npm start`)
 - `ALLOW_ORIGIN` the value for the 'Access-Control-Allow-Origin' CORS header
+- `INSECURE_HTTP_ORIGINS` comma separated list of origins for which HTTP should be used instead of HTTPS (added to make developing against locally running git servers easier)
 
 ## License
 

@@ -3,6 +3,7 @@ const url = require('url')
 const pkg = require('./package.json')
 const {send} = require('micro')
 const origin = process.env.ALLOW_ORIGIN
+const insecure_origins = (process.env.INSECURE_HTTP_ORIGINS || '').split(',')
 const allowHeaders = [
   'accept-encoding',
   'accept-language',
@@ -104,9 +105,10 @@ async function service (req, res) {
   let parts = p.match(/\/([^\/]*)\/(.*)/)
   let pathdomain = parts[1]
   let remainingpath = parts[2]
-  console.log(`https://${pathdomain}/${remainingpath}`)
+  let protocol = insecure_origins.includes(pathdomain) ? 'http' : 'https'
+  console.log(`${protocol}://${pathdomain}/${remainingpath}`)
   let f = await fetch(
-    `https://${pathdomain}/${remainingpath}`,
+    `${protocol}://${pathdomain}/${remainingpath}`,
     {
       method: req.method,
       headers,
