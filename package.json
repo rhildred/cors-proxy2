@@ -18,20 +18,19 @@
     "url": "https://github.com/isomorphic-git/cors-proxy.git"
   },
   "dependencies": {
-    "cross-env": "^5.1.4",
+    "cross-env": "^5.2.0",
     "daemonize-process": "^1.0.9",
-    "micro": "^9.1.4",
+    "micro": "^9.3.3",
     "minimisted": "^2.0.0",
-    "node-fetch": "^2.1.2",
-    "tree-kill": "^1.2.0"
+    "node-fetch": "^2.3.0",
+    "tree-kill": "^1.2.1"
   },
   "now": {
     "public": true
   },
   "devDependencies": {
     "micro-dev": "^2.2.2",
-    "travis-deploy-once": "^5.0.1",
-    "semantic-release": "^15.6.3"
+    "semantic-release": "^15.12.5"
   },
   "publishConfig": {
     "access": "public"
