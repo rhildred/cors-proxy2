@@ -134,9 +134,9 @@ module.exports = ({ origin, insecure_origins = [], authorization = noop } = {}) 
         if (f.headers.has(h)) {
           res.setHeader(h, f.headers.get(h))
         }
-        if (f.redirected) {
-          res.setHeader('x-redirected-url', f.url)
-        }
+      }
+      if (f.redirected) {
+        res.setHeader('x-redirected-url', f.url)
       }
       f.body.pipe(res)
     })
