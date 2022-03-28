@@ -113,13 +113,16 @@ There is no official chart for this project, helm or otherwise. You can make you
 _Example:_
 ```yaml
   containers:
-      - command:
+      - name: cors-proxy
+        image: node:lts-alpine
+        env:
+        - name: ALLOW_ORIGIN
+          value: https://mydomain.com
+        command:
         - npx
         args:
         - '@isomorphic-git/cors-proxy'
         - start
-        image: node:lts-alpine
-        name: cors-proxy
         ports:
         - containerPort: 9999
           hostPort: 9999
