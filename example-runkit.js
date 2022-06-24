@@ -21,6 +21,9 @@ console.log(`You can test by running:
 $ npx isomorphic-git clone --corsProxy="RUNKIT_ENDPOINT_URL" --url="https://github.com/isomorphic-git/isomorphic-git.git"
 Redirects are not supported, so you'll need the root endpoint url...  not the one that ends with a path and starts with runkit.io, but the one that ends with runkit.sh.
 You can find out what your endpoint url is by visiting ${rkUrl}
+
+it should look something like "https://untitled-123abc.runkit.sh"
+DO NOT add a forward slash at the end!
 `)
 
 app.listen(port, () => {
