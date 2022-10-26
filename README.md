@@ -106,6 +106,36 @@ function getAuthorizedUser(req: Request, header: string = 'Authorization') {
 }
 ```
 
+## Installation on Kubernetes
+
+There is no official chart for this project, helm or otherwise. You can make your own, but keep in mind cors-proxy uses the Micro server, which will return a 403 error for any requests that do not have the user agent header.
+
+_Example:_
+```yaml
+  containers:
+      - name: cors-proxy
+        image: node:lts-alpine
+        env:
+        - name: ALLOW_ORIGIN
+          value: https://mydomain.com
+        command:
+        - npx
+        args:
+        - '@isomorphic-git/cors-proxy'
+        - start
+        ports:
+        - containerPort: 9999
+          hostPort: 9999
+          name: proxy
+          protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: proxy
+        readinessProbe:
+          tcpSocket:
+            port: proxy
+```
+
 ## License
 
 This work is released under [The MIT License](https://opensource.org/licenses/MIT)
