@@ -100,7 +100,7 @@ module.exports = ({ origin, insecure_origins = [], authorization = noop } = {}) 
       next()
     }
   }
-  function middleware (req, res) {
+  function middleware (req, res, next) {
     let u = url.parse(req.url, true)
 
 
@@ -147,7 +147,10 @@ module.exports = ({ origin, insecure_origins = [], authorization = noop } = {}) 
         res.setHeader('x-redirected-url', f.url)
       }
       f.body.pipe(res)
-    })
+    }).catch(e => {
+      console.error(e);
+      next();
+    });
   }
   const cors = microCors({
     allowHeaders,
