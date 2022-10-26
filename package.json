@@ -35,5 +35,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "runkitExampleFilename": "example-runkit.js"
 }
