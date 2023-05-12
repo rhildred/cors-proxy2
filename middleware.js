@@ -47,57 +47,15 @@ const allowMethods = [
   'POST',
   'GET',
   'OPTIONS'
-]
+];
 
-const allow = require('./allow-request.js')
-
-const filter = (predicate, middleware) => {
-  function corsProxyMiddleware (req, res, next) {
-    if (predicate(req, res)) {
-      middleware(req, res, next)
-    } else {
-      next()
-    }
-  }
-  return corsProxyMiddleware
-}
-
-const compose = (...handlers) => {
-  const composeTwo = (handler1, handler2) => {
-    function composed (req, res, next) {
-      handler1(req, res, (err) => {
-        if (err) {
-          return next(err)
-        } else {
-          return handler2(req, res, next)
-        }
-      })
-    }
-    return composed
-  }
-  let result = handlers.pop()
-  while(handlers.length) {
-    result = composeTwo(handlers.pop(), result)
-  }
-  return result
-}
-
-function noop (_req, _res, next) {
-  next()
-}
-
-module.exports = ({ origin, insecure_origins = [], authorization = noop } = {}) => {
-  function predicate (req) {
-    let u = url.parse(req.url, true)
-    // Not a git request, skip
-    return allow(req, u)
-  }
-  function sendCorsOK (req, res, next) {
+module.exports = ({ origin, insecure_origins = [] } = {}) => {
+  function sendCorsOK (req, res) {
     // Handle CORS preflight request
     if (req.method === 'OPTIONS') {
-      return send(res, 200, '')
+      return send(res, 200, '');
     } else {
-      next()
+      return middleware(req, res);
     }
   }
   function middleware (req, res, next) {
@@ -159,5 +117,5 @@ module.exports = ({ origin, insecure_origins = [], authorization = noop } = {}) 
     allowCredentials: false,
     origin
   })
-  return filter(predicate, cors(compose(sendCorsOK, authorization, middleware)))
+  return cors(sendCorsOK);
 }
