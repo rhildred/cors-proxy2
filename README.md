@@ -9,7 +9,7 @@ Consume in cloudflare pages function. For instance in `functions/corsproxy/[[cor
 
 ```javascript
 
-import {CorsProxyResponse} from "cors-proxy2";
+import {CorsProxyResponse} from "@rhildred/cors-proxy2";
 
 export async function onRequest(context) {
     const apiUrl = context.request.url.replace(/^.*corsproxy/, "https://codeload.github.com");
@@ -24,7 +24,7 @@ or in `functions/gitcorsproxy/[[gitcorsproxy]].js`
 
 ```javascript
 
-import {CorsProxyResponse} from "cors-proxy2";
+import {CorsProxyResponse} from "@rhildred/cors-proxy2";
 
 export async function onRequest(context) {
     const apiUrl = context.request.url.replace(/^.*gitcorsproxy/, "https:/");
