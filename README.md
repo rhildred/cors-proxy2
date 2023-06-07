@@ -3,7 +3,7 @@
 
 To use:
 
-`npm install --save-dev cors-proxy2`
+`npm install --save-dev @rhildred/cors-proxy2`
 
 Consume in cloudflare pages function. For instance in `functions/corsproxy/[[corsproxy]].js`:
 
