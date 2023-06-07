@@ -1,40 +1,45 @@
 {
-  "name": "@isomorphic-git/cors-proxy",
-  "version": "0.0.0-development",
-  "description": "Proxy clone and push requests for the browser",
-  "main": "index.js",
-  "bin": "bin.js",
-  "scripts": {
-    "start": "cross-env micro --listen=tcp://0.0.0.0:$PORT",
-    "dev": "micro-dev",
-    "travis-deploy-once": "travis-deploy-once --pro",
-    "semantic-release": "semantic-release"
-  },
-  "keywords": [],
-  "author": "William Hilton <wmhilton@gmail.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/isomorphic-git/cors-proxy.git"
-  },
-  "dependencies": {
-    "cross-env": "^5.2.0",
-    "daemonize-process": "^1.0.9",
-    "micro": "^9.3.3",
-    "micro-cors": "0.1.1",
-    "minimisted": "^2.0.0",
-    "node-fetch": "^2.6.0",
-    "tree-kill": "^1.2.1"
-  },
-  "now": {
-    "public": true
-  },
-  "devDependencies": {
-    "micro-dev": "^2.2.2",
-    "semantic-release": "16.0.3"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "runkitExampleFilename": "example-runkit.js"
-}
+    "name": "cors-proxy2",
+    "version": "1.0.0",
+    "description": "cors proxy to expose in a cloudflare pages function",
+    "files": [
+      "dist"
+    ],
+    "main": "./dist/index.umd.js",
+    "module": "./dist/index.es.js",
+    "exports": {
+      ".": {
+        "import": "./dist/js/index.es.js",
+        "require": "./dist/js/index.umd.js"
+      }
+    },
+    "scripts": {
+      "test": "vitest run __tests__",
+      "build": "vite build"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rhildred/cors-proxy2.git"
+    },
+    "keywords": [
+      "github",
+      "cors",
+      "proxy",
+      "cloudflare",
+      "pages",
+      "functions",
+      "stackblitz",
+      "isomorphic-git"
+    ],
+    "author": "Rich Hildred",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/rhildred/cors-proxy2/issues"
+    },
+    "homepage": "https://rhildred.github.io/cors-proxy2",
+    "type": "module",
+    "devDependencies": {
+      "vite": "^4.2.1",
+      "vitest": "^0.29.8"
+    }
+  }
