@@ -12,10 +12,6 @@ export default defineConfig({
       fileName: (format, entryName) => {
         return `js/${entryName}.${format}.js`;
       },
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'fs', 'url', 'path', 'node:url', 'node:http', 'node-fetch'],
-    },
-  
+    }  
   }
 })
