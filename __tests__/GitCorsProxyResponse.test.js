@@ -17,9 +17,9 @@ describe("test isogit with my corsproxy", ()=>{
           });
           expect(true).toBe(true);
     }, 20000);
-    it.skip('clones from cors-proxy', async () => {
+    it('clones from cors-proxy', async () => {
         await git.clone({
-            corsProxy: 'http://127.0.0.1:9999',
+            corsProxy: 'http://127.0.0.1:8080/gitcorsproxy',
             url: 'https://github.com/isomorphic-git/isomorphic-git',
             ref: 'main',
             singleBranch: true,

@@ -54,25 +54,31 @@ export default class {
 * @param {Request} request the incoming request to read from
 */
   async readRequestBody(request) {
-    const contentType = request.headers.get("content-type");
-    if (contentType.includes("application/json")) {
-      return JSON.stringify(await request.json());
-    } else if (contentType.includes("application/text")) {
-      return request.text();
-    } else if (contentType.includes("text/html")) {
-      return request.text();
-    } else if (contentType.includes("form")) {
-      const formData = await request.formData();
-      const body = {};
-      for (const entry of formData.entries()) {
-        body[entry[0]] = entry[1];
+    try {
+
+      const contentType = request.headers.get("content-type");
+      if (contentType.includes("application/json")) {
+        return JSON.stringify(await request.json());
+      } else if (contentType.includes("application/text")) {
+        return request.text();
+      } else if (contentType.includes("text/html")) {
+        return request.text();
+      } else if (contentType.includes("form")) {
+        const formData = await request.formData();
+        const body = {};
+        for (const entry of formData.entries()) {
+          body[entry[0]] = entry[1];
+        }
+        return JSON.stringify(body);
+      } else {
+        // Perhaps some other type of data was submitted in the form
+        // like an image, or some other binary data.
+        return await request.arrayBuffer();
       }
-      return JSON.stringify(body);
-    } else {
-      // Perhaps some other type of data was submitted in the form
-      // like an image, or some other binary data.
-      return await request.arrayBuffer();
+    } catch (e) {
+      return request.body;
     }
+
   }
 
   async getResponse(req) {
@@ -137,13 +143,13 @@ export default class {
     return res;
   }
   async getExpressResponse(req) {
-    const oHeaders = new Headers(req.headers);
-    const oFetch = { url: this.url, headers: oHeaders, method: req.method };
-    let oResponse = await this.getResponse(oFetch);
+    req.headers = new Headers(req.headers);
+    req.url = this.url;
+    let oResponse = await this.getResponse(req);
     oResponse.headersHash = {};
     for (let [key, value] of oResponse.headers) {
       oResponse.headersHash[key] = value;
     }
-    return(oResponse);
+    return (oResponse);
   }
 }

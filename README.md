@@ -26,6 +26,7 @@ or in an express app:
 
 import express from 'express';
 import CorsProxyResponse from './CorsProxyResponse.js';
+import { pipeline } from 'stream/promises';
 export default () => {
     const app = express();
     app.all(/^\/.*corsproxy/, async (req, res) => {
@@ -33,7 +34,7 @@ export default () => {
         const oResponseFactory = new CorsProxyResponse({ url: apiUrl });
         const oResponse = await oResponseFactory.getExpressResponse(req);
         res.set(oResponse.headersHash);
-        res.send(oResponse.body);
+        await pipeline(oResponse.body, res);
     });
     return app;
 }
