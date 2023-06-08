@@ -1,2 +1,3 @@
 import CorsProxyResponse from '../CorsProxyResponse.js';
-export {CorsProxyResponse};
+import createApp from '../ExpressProxy.js';
+export {CorsProxyResponse, createApp};
