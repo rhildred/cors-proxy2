@@ -17,38 +17,9 @@ export async function onRequest(context) {
     const oResponseFactory = new CorsProxyResponse({url:apiUrl});
     return await oResponseFactory.getResponse(context.request);
 }
-
 ```
+This code can also be consumed in express using the wrapper at [https://github.com/diy-pwa/cloudflare2express](https://github.com/diy-pwa/cloudflare2express).
 
-or in an express app:
-
-```javascript
-
-import express from 'express';
-import CorsProxyResponse from './CorsProxyResponse.js';
-import { pipeline } from 'stream/promises';
-export default () => {
-    const app = express();
-    app.all(/^\/.*corsproxy/, express.raw({
-        inflate: true,
-        limit: '50mb',
-        type: () => true, // this matches all content types for this route
-    }), async (req, res) => {
-        const apiUrl = req.url.replace(/^.*corsproxy/, "https:/");
-        const oResponseFactory = new CorsProxyResponse({ url: apiUrl });
-        const oResponse = await oResponseFactory.getExpressResponse(req);
-        res.set(oResponse.headersHash);
-        if (oResponse.body) {
-            await pipeline(oResponse.body, res);
-        } else {
-            // options doesn't have body
-            res.end();
-        }
-
-    });
-    return app;
-}
-```
 This code is based on the [cors-proxy](https://github.com/isomorphic-git/cors-proxy) code from isomorphic-git. It is refactored to be exposed as a cloudflare pages function or in an express app.
 
 I am consuming the cloudflare pages function in [diy-pwa](https://github.com/diy-pwa/diy-pwa) and [git-pwa](https://github.com/diy-pwa/git-pwa). These projects are for a [stackblitz](https://stackblitz.com) development environment for sales engineers to make progressive web apps. The pwa is for hosting .svg configuration models and complements for business to business products.
