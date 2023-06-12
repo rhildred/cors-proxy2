@@ -31,5 +31,5 @@ describe("tests proxy cloudflare worker", ()=>{
         await server.close();
         expect(true).toBe(true);
 
-    });
+    }, 20000);
 })

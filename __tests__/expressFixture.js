@@ -12,8 +12,10 @@ export default () => {
     limit: '50mb',
     type: () => true // this matches all content types for this route
   }), async (req, res) => {
-    req.url = req.url.replace(/^.*proxy/, "https:/");
-    workersAdapter(origin, req, res);
+    let clonedObject = {...req}
+clonedObject = {...clonedObject, url: req.url.replace(/^.*proxy/, "https:/")}
+//    req.url = req.url.replace(/^.*proxy/, "https:/");
+    workersAdapter(origin, clonedObject, res);
   });
   return app;
 }
