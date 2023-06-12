@@ -1,3 +1,5 @@
+import { readRequestBody } from "diy-pwa";
+
 const allowHeaders = [
     'Accept-Encoding',
     'Accept-Language',
@@ -42,41 +44,9 @@ const allowMethods = [
     'OPTIONS'
 ];
 
-export default class {
-    constructor(options) {
-        if (typeof (options) != "undefined") {
-            Object.assign(this, options);
-        }
-    }
-    /**
-  * readRequestBody reads in the incoming request body
-  * Use await readRequestBody(..) in an async function to get the string
-  * @param {Request} request the incoming request to read from
-  */
-    async readRequestBody(request) {
-        const contentType = request.headers.get("content-type");
-        if (contentType.includes("application/json")) {
-            return JSON.stringify(await request.json());
-        } else if (contentType.includes("application/text")) {
-            return request.text();
-        } else if (contentType.includes("text/html")) {
-            return request.text();
-        } else if (contentType.includes("form")) {
-            const formData = await request.formData();
-            const body = {};
-            for (const entry of formData.entries()) {
-                body[entry[0]] = entry[1];
-            }
-            return JSON.stringify(body);
-        } else {
-            // Perhaps some other type of data was submitted in the form
-            // like an image, or some other binary data.
-            return await request.arrayBuffer();
-        }
+export default {
 
-    }
-
-    async getResponse(req) {
+    async fetch(req) {
         let headers = new Headers();
         for (let h of allowHeaders) {
             if (req.headers.get(h)) {
@@ -96,17 +66,17 @@ export default class {
             let f = null;
             try {
                 f = await fetch(
-                    this.url,
+                    req.url,
                     {
                         method: req.method,
                         headers,
-                        body: (req.method !== 'GET' && req.method !== 'HEAD') ? await this.readRequestBody(req) : undefined
+                        body: (req.method !== 'GET' && req.method !== 'HEAD') ? await readRequestBody(req) : undefined
                     }
                 )
             } catch (e) {
                 console.log(e.toString());
                 console.log("");
-                console.log(JSON.stringify(req));
+                console.log(req);
                 console.log("");
                 headers.forEach(function (value, name) {
                     console.log(name + ": " + value);
