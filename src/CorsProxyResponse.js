@@ -69,6 +69,7 @@ export default {
                 f = await fetch(
                     proxyUrl,
                     {
+                        compress: false,
                         method: req.method,
                         headers,
                         body: (req.method !== 'GET' && req.method !== 'HEAD') ? await readRequestBody(req) : undefined

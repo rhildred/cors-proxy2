@@ -1,6 +1,6 @@
 {
     "name": "@rhildred/cors-proxy2",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "cors proxy to expose in a cloudflare pages function",
     "files": [
         "dist"
