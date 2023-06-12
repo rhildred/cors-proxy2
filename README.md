@@ -5,6 +5,15 @@ To use:
 
 `npm install --save-dev @rhildred/cors-proxy2`
 
+put the url in the query string. For instance:
+
+```javascript
+        const res = await request(app)
+        .get("/proxy?url=https://github.com/diy-pwa/diy-pwa/archive/refs/heads/main.zip");
+
+
+```
+
 Consume in cloudflare pages function. For instance in `functions/corsproxy/[[corsproxy]].js`:
 
 ```javascript

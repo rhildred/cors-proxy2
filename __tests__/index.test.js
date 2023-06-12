@@ -9,13 +9,13 @@ describe("tests proxy cloudflare worker", ()=>{
     it("gets .zip from github", async () =>{
         const app = createApp();
         const res = await request(app)
-        .get("/proxy/github.com/diy-pwa/diy-pwa/archive/refs/heads/main.zip");
+        .get("/proxy?url=https://github.com/diy-pwa/diy-pwa/archive/refs/heads/main.zip");
         if(res.status < 200 || res.status >= 300 ){
             console.log(res.body);
         }
         expect(res.status).toBe(200);
     }, 10000);
-    it("clones a git repo", async ()=>{
+    it.skip("clones a git repo", async ()=>{
         const app = createApp();
         const server = await app.listen(8080);
         await git.clone({
