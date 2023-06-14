@@ -15,6 +15,14 @@ describe("tests proxy cloudflare worker", ()=>{
         }
         expect(res.status).toBe(200);
     }, 10000);
+    it("gets a gzip encoding", async ()=>{
+        const app = createApp();
+        const res = await request(app).get("/proxy?url=https://github.com");
+        if(res.status < 200 || res.status >= 300 ){
+            console.log(res.body);
+        }
+        expect(res.status).toBe(200);
+    })
     it.skip("clones a git repo", async ()=>{
         const app = createApp();
         const server = await app.listen(8080);

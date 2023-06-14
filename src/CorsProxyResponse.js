@@ -46,7 +46,7 @@ const allowMethods = [
 
 export default {
 
-    async fetch(req) {
+    async fetch(req, env) {
         const proxyUrl = new URL(req.url, 'http://dummy').searchParams.get("url");
         let headers = new Headers();
         for (let h of allowHeaders) {
@@ -66,7 +66,7 @@ export default {
         } else {
             let f = null;
             try {
-                f = await fetch(
+                f = await env.fetch(
                     proxyUrl,
                     {
                         compress: false,

@@ -2,6 +2,7 @@ import express from 'express';
 import origin from '../src/CorsProxyResponse.js';
 import { workersAdapter } from 'cloudflare2express';
 import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ export default () => {
     limit: '50mb',
     type: () => true // this matches all content types for this route
   }), async (req, res) => {
-    workersAdapter(origin, req, res);
+    workersAdapter(origin, req, res, {fetch:fetch});
   });
   return app;
 }
