@@ -65,7 +65,7 @@ export default {
             res = new Response();
         } else {
             let f = null;
-            try {
+            if(env.fetch){
                 f = await env.fetch(
                     proxyUrl,
                     {
@@ -75,14 +75,15 @@ export default {
                         body: (req.method !== 'GET' && req.method !== 'HEAD') ? await readRequestBody(req) : undefined
                     }
                 )
-            } catch (e) {
-                console.log(e.toString());
-                console.log("");
-                console.log(req);
-                console.log("");
-                headers.forEach(function (value, name) {
-                    console.log(name + ": " + value);
-                });
+            } else {
+                f = await fetch(
+                    proxyUrl,
+                    {
+                        method: req.method,
+                        headers,
+                        body: (req.method !== 'GET' && req.method !== 'HEAD') ? await readRequestBody(req) : undefined
+                    }
+                )
 
             }
             // Recreate the response so you can modify the headers
