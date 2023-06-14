@@ -47,7 +47,6 @@ const allowMethods = [
 export default {
 
     async fetch(req, env) {
-        const proxyUrl = new URL(req.url, 'http://dummy').searchParams.get("url");
         let headers = new Headers();
         for (let h of allowHeaders) {
             if (req.headers.get(h)) {
@@ -64,10 +63,10 @@ export default {
         if (req.method == "OPTIONS") {
             res = new Response();
         } else {
-            let f = null;
-            if(env.fetch){
+            var f;
+            if(env && env.fetch) {
                 f = await env.fetch(
-                    proxyUrl,
+                    env.url,
                     {
                         compress: false,
                         method: req.method,
@@ -77,14 +76,13 @@ export default {
                 )
             } else {
                 f = await fetch(
-                    proxyUrl,
+                    env.url,
                     {
                         method: req.method,
                         headers,
                         body: (req.method !== 'GET' && req.method !== 'HEAD') ? await readRequestBody(req) : undefined
                     }
                 )
-
             }
             // Recreate the response so you can modify the headers
             res = new Response(f.body, f);

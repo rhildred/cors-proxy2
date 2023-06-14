@@ -9,7 +9,7 @@ describe("tests proxy cloudflare worker", ()=>{
     it("gets .zip from github", async () =>{
         const app = createApp();
         const res = await request(app)
-        .get("/proxy?url=https://github.com/diy-pwa/diy-pwa/archive/refs/heads/main.zip");
+        .get("/corsproxy/github.com/diy-pwa/diy-pwa/archive/refs/heads/main.zip");
         if(res.status < 200 || res.status >= 300 ){
             console.log(res.body);
         }
@@ -17,7 +17,7 @@ describe("tests proxy cloudflare worker", ()=>{
     }, 10000);
     it("gets a gzip encoding", async ()=>{
         const app = createApp();
-        const res = await request(app).get("/proxy?url=https://github.com");
+        const res = await request(app).get("/corsproxy/github.com");
         if(res.status < 200 || res.status >= 300 ){
             console.log(res.body);
         }

@@ -8,12 +8,13 @@ dotenv.config();
 
 export default () => {
   const app = express();
-  app.all(/\/proxy/, express.raw({
+  app.all(/\/corsproxy/, express.raw({
     inflate: true,
     limit: '50mb',
     type: () => true // this matches all content types for this route
   }), async (req, res) => {
-    workersAdapter(origin, req, res, {fetch:fetch});
+    const apiUrl = req.url.replace(/^.*corsproxy/, "https:/");
+    workersAdapter(origin, req, res, {fetch:fetch, url: apiUrl});
   });
   return app;
 }
