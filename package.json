@@ -15,7 +15,8 @@
     },
     "scripts": {
         "test": "vitest run __tests__",
-        "build": "vite build"
+        "build": "vite build",
+        "start": "node expressServer.js"
     },
     "repository": {
         "type": "git",
